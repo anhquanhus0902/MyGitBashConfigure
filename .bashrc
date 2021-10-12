@@ -1,14 +1,13 @@
-########################################XAO NAU TREN MANG VA TU VIET##########################################################
-
-#                         _                             
-#                        | |                            
-#__   ___ __   __ _ _ __ | |__   __ _ _   _  __ _ _ __  
-#\ \ / / '_ \ / _` | '_ \| '_ \ / _` | | | |/ _` | '_ \ 
-# \ V /| | | | (_| | | | | | | | (_| | |_| | (_| | | | |
-#  \_/ |_| |_|\__,_|_| |_|_| |_|\__, |\__,_|\__,_|_| |_|
-#                                  | |                  
-#                                  |_|                  
-
+######################################################XAO NAU TREN MANG VA TU VIET###############################################################
+#											                         _                        	     											#
+#											                        | |                            												#
+#											__   ___ __   __ _ _ __ | |__   __ _ _   _  __ _ _ __  												#
+#											\ \ / / '_ \ / _` | '_ \| '_ \ / _` | | | |/ _` | '_ \ 												#
+#											 \ V /| | | | (_| | | | | | | | (_| | |_| | (_| | | | |												#
+#											  \_/ |_| |_|\__,_|_| |_|_| |_|\__, |\__,_|\__,_|_| |_|												#
+#											                                  | |                  												#
+#											                                  |_|                  												#
+#################################################################################################################################################
 
 #URL='https://www.accuweather.com/vi/vn/ban-yen-nhan/353996/weather-forecast/353996'
 
@@ -30,7 +29,7 @@ darkgray="$bold"$(tput setaf 0)           # bold black = dark gray text
 white="$bold$gray"                        # bright white text
 
 # Title
-echo -en "\033]0;Git Bash (ノಠ益ಠ)ノ彡┻━┻\a"
+echo -en "\033]0;My Bash (ノಠ益ಠ)ノ彡┻━┻\a"
 
 # Weather
 curl wttr.in/?0 --silent --max-time 3 > /tmp/now-weather
@@ -61,15 +60,15 @@ done
 #fi
 
 Column=100
-tput cup 0 $Column
-echo "${blue}             _.-;;-._"
-tput cup 1 $Column
-echo "      '-..-'|   ||   |"
 tput cup 2 $Column
-echo "      '-..-'|_.-;;-._|"
+echo "${blue}             _.-;;-._"
 tput cup 3 $Column
 echo "      '-..-'|   ||   |"
 tput cup 4 $Column
+echo "      '-..-'|_.-;;-._|"
+tput cup 5 $Column
+echo "      '-..-'|   ||   |"
+tput cup 6 $Column
 echo "      '-..-'|_.-''-._|"
 
 # ASCII Art 2
@@ -214,12 +213,20 @@ source $OSH/oh-my-bash.sh
 
 # Open .bashrc
 alias bashconfig="vim ~/.bashrc"
+
 # Open .oh-my-bash
 alias ohmybash="vim ~/.oh-my-bash"
+
 # Open one more Git Bash
 alias omgb="e:/khac/quan/Git/git-bash.exe"
 
-# Re-open Git Bash
+# Open Notepad++
+alias npps="c:/Program\ Files/Notepad++/notepad++.exe"
+
+# Open VS Code
+alias vs="c:/Users/ULTIMATE/AppData/Local/Programs/Microsoft\ VS\ Code/Code.exe"
+
+# Re-open Bash
 reopen()
 {
 	omgb & exit
@@ -234,4 +241,14 @@ mkcd ()
 cdb()
 {
 	cd.. && cd -P -- "$1"
+}
+
+npp()
+{
+	npps & echo ""
+}
+
+vsc()
+{
+	vs & echo ""
 }
