@@ -29,13 +29,51 @@ gray=$(tput setaf 7)                      # dim white text
 darkgray="$bold"$(tput setaf 0)           # bold black = dark gray text
 white="$bold$gray"                        # bright white text
 
+# Title
+echo -en "\033]0;Git Bash (ノಠ益ಠ)ノ彡┻━┻\a"
+
 # Weather
-curl wttr.in/?0 --silent --max-time 3
+curl wttr.in/?0 --silent --max-time 3 > /tmp/now-weather
+readarray weather < /tmp/now-weather
+rm -f /tmp/now-weather
 
-echo "${blue}"
+if [[ "${weather[0]}" == "Weather report:"* ]]
+then
+	WeatherSuccess=true
+	echo "${weather[@]}"
+else
+	WeatherSuccess=false
+	echo "Weather unavailable now"
+fi
 
+# ASCII Art 1
+tput sc
+for ((i = 0; i < 10; ++i)); do
+	tput cuu1
+done
+
+#if [[ "$WeatherSuccess" == true ]]
+#then
+#	Column=90
+#	tput cup 0 $Column
+#else
+#	tput cuf $Column
+#fi
+
+Column=100
+tput cup 0 $Column
+echo "${blue}             _.-;;-._"
+tput cup 1 $Column
+echo "      '-..-'|   ||   |"
+tput cup 2 $Column
+echo "      '-..-'|_.-;;-._|"
+tput cup 3 $Column
+echo "      '-..-'|   ||   |"
+tput cup 4 $Column
+echo "      '-..-'|_.-''-._|"
+
+# ASCII Art 2
 cat 'E:\khac\quan\klq\banner1.txt'
-
 echo "${normal}"
 
 # Line1
@@ -173,5 +211,27 @@ source $OSH/oh-my-bash.sh
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-# alias bashconfig="mate ~/.bashrc"
-# alias ohmybash="mate ~/.oh-my-bash"
+
+# Open .bashrc
+alias bashconfig="vim ~/.bashrc"
+# Open .oh-my-bash
+alias ohmybash="vim ~/.oh-my-bash"
+# Open one more Git Bash
+alias omgb="e:/khac/quan/Git/git-bash.exe"
+
+# Re-open Git Bash
+reopen()
+{
+	omgb & exit
+}
+
+# Create a directory and move into that directory
+mkcd ()
+{
+ 	 mkdir -p -- "$1" && cd -P -- "$1"
+}
+
+cdb()
+{
+	cd.. && cd -P -- "$1"
+}
