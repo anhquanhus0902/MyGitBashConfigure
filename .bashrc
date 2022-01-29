@@ -1,111 +1,11 @@
-#URL='https://www.accuweather.com/vi/vn/ban-yen-nhan/353996/weather-forecast/353996'
-
-# Color 
-normal=$'\e[0m'                           # (works better sometimes)
-bold=$(tput bold)                         # make colors bold/bright
-red="$bold$(tput setaf 1)"                # bright red text
-green=$(tput setaf 2)                     # dim green text
-fawn=$(tput setaf 3); beige="$fawn"       # dark yellow text
-yellow="$bold$fawn"                       # bright yellow text
-darkblue=$(tput setaf 4)                  # dim blue text
-blue="$bold$darkblue"                     # bright blue text
-purple=$(tput setaf 5); magenta="$purple" # magenta text
-pink="$bold$purple"                       # bright magenta text
-darkcyan=$(tput setaf 6)                  # dim cyan text
-cyan="$bold$darkcyan"                     # bright cyan text
-gray=$(tput setaf 7)                      # dim white text
-darkgray="$bold"$(tput setaf 0)           # bold black = dark gray text
-white="$bold$gray"                        # bright white text
-
-# Title
-echo -en "\033]0;My Bash (ノಠ益ಠ)ノ彡┻━┻\a"
-
-# Weather
-curl wttr.in/?0 --silent --max-time 3 > /tmp/now-weather
-readarray weather < /tmp/now-weather
-rm -f /tmp/now-weather
-
-if [[ "${weather[0]}" == "Weather report:"* ]]
-then
-	WeatherSuccess=true
-	echo "${weather[@]}"
-else
-	WeatherSuccess=false
-	echo "Weather unavailable now"
-fi
-
-# ASCII Art 1
-tput sc
-for ((i = 0; i < 10; ++i)); do
-	tput cuu1
-done
-
-#if [[ "$WeatherSuccess" == true ]]
-#then
-#	Column=90
-#	tput cup 0 $Column
-#else
-#	tput cuf $Column
-#fi
-
-Column=100
-tput cup 2 $Column
-echo "${blue}             _.-;;-._"
-tput cup 3 $Column
-echo "      '-..-'|   ||   |"
-tput cup 4 $Column
-echo "      '-..-'|_.-;;-._|"
-tput cup 5 $Column
-echo "      '-..-'|   ||   |"
-tput cup 6 $Column
-echo "      '-..-'|_.-''-._|"
-
-# ASCII Art 2
-cat 'E:\khac\quan\klq\banner1.txt'
-echo "${normal}"
-
-# Line1
-for ((i = 1; i < 150; ++i)); do
-	printf "${fawn}-"
-done
-echo "${normal}"
-
-# Time
-now=$(date)
-echo -e "${blue}Current time: $now"
-
-# Greeting
-hour=$(date "+%H")
-msg=""
-if [[ $hour -ge 5 && $hour -lt 11 ]]
-then
-	msg="Good morning, Quan."
-elif [[ $hour -ge 11 && $hour -lt 13 ]]
-then
-	msg="Lunch is waiting for you."
-elif [[ $hour -ge 13 && $hour -lt 18  ]]
-then
-	msg="Good afternoon, Quan."
-elif [[ $hour -ge 18 && $hour -lt 22 ]]
-then
-	msg="Good evening, Quan."
-else
-	msg="You should go to bed."
-fi
-echo -e "$msg ${normal}" 
-
-# Line2
-for ((i = 1; i < 150; ++i)); do
-	printf "${fawn}-"
-done
-echo "${normal}"
+#neofetch
 ##############################################################################################################################
 # Path to your oh-my-bash installation.
-export OSH=/c/Users/ULTIMATE/.oh-my-bash
+#export OSH=/c/Users/Admin/.oh-my-bash
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-bash is loaded.
-OSH_THEME="agnoster"
+#OSH_THEME="agnoster"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -172,7 +72,7 @@ plugins=(
   bashmarks
 )
 
-source $OSH/oh-my-bash.sh
+#source $OSH/oh-my-bash.sh
 
 # User configuration
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -199,7 +99,6 @@ source $OSH/oh-my-bash.sh
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-
 # Open .bashrc
 alias bashconfig="vim ~/.bashrc"
 
@@ -207,16 +106,37 @@ alias bashconfig="vim ~/.bashrc"
 alias ohmybash="vim ~/.oh-my-bash"
 
 # Open one more Git Bash
-alias omgb="e:/khac/quan/Git/git-bash.exe"
+alias omgb="c:/Program\ Files/Git/git-bash.exe"
 
 # Open Notepad++
 alias npps="c:/Program\ Files/Notepad++/notepad++.exe"
 
 # Open VS Code
-alias vs="c:/Users/ULTIMATE/AppData/Local/Programs/Microsoft\ VS\ Code/Code.exe"
+alias vs="c:/Users/Admin/AppData/Local/Programs/Microsoft\ VS\ Code/Code.exe"
 
-# Re-open Bash
-reopen()
+# Open Neovim
+alias nv="d:/Installer/Neovim/bin/nvim-qt.exe"
+
+# Open Postman workspace
+alias postman="start microsoft-edge:https://web.postman.co/workspace/My-Workspace~af2c530a-b659-47c0-82cf-f15ec072f4d0/overview"
+
+# Open Github
+alias github="start microsoft-edge:https://github.com/"
+
+# Open Github repository
+ghrepo()
+{
+	GITHUB_REPO_URL=$(git config --get remote.origin.url)
+	if [ ${#GITHUB_REPO_URL} != 0 ]
+	then
+		start microsoft-edge:${GITHUB_REPO_URL}
+	else
+		echo "Not a Github repository"
+	fi
+}
+
+# Restart Bash
+restart()
 {
 	omgb & exit
 }
@@ -234,10 +154,15 @@ cdb()
 
 npp()
 {
-	npps & echo ""
+	npps "$1" & echo 
 }
 
 vsc()
 {
-	vs & echo ""
+	vs "$1" & echo
+}
+
+nvim()
+{
+	nv "$1" & echo
 }
